@@ -31,6 +31,9 @@ impl<T> List<T> {
         }
     }
 
+    pub fn head(&self) -> Option<&T> {
+        self.head.as_ref().map(|node| &node.elem)
+    }
 }
 
 mod test {
@@ -47,21 +50,6 @@ mod test {
 
         list = list.prepend(7);
         assert_eq!(list.head.as_ref().unwrap().elem, 7);
-
-        
-        // assert_eq!(list.head.as_ref().unwrap().elem, 5);
-        // assert_eq!(list.head.as_ref().unwrap().elem, 5);
-        // assert_eq!(list.head.as_ref().unwrap().next, );
-
-        // println!("Elem: {}", list.head.as_ref().unwrap().elem);
-        // println!("Elem: {}", list.head.as_ref().unwrap().next.as_ref().unwrap().elem);
-
-
-        // println!("Strong count: {}", Rc::strong_count(&list.head.unwrap()));
-                // let list2 = list.prepend(6);
-        // let list3 = list.prepend(7);        // assert_eq!(list.head.clone().unwrap().elem, 5);
-        // assert_eq!(list.head.clone().unwrap().elem, 5);
-        // assert_eq!(list.head.unwrap().elem, 5);
 
     }
 
@@ -82,12 +70,13 @@ mod test {
         // Will break unless you use map instead of unwrap!
         let new_list = list.tail().tail().tail().tail().tail();
         assert!(new_list.head.is_none());
-        // new_list.head.as_ref().unwrap().elem;
-        // for i in 1..4 { 
-        //     println!("Elem {}", trunc_list)
-        // }
-        // assert_eq!(list.tail().tail().head.unwrap().elem, 4);
+     
+    }
 
+    #[test]
+    fn test_head() {
+        let list = List { head: Some(Rc::new(Node{elem:4, next: None}))};
+        assert_eq!(list.head(), Some(&4));
 
     }
 }
