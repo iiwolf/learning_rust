@@ -36,9 +36,35 @@ impl<T> List<T> {
     }
 }
 
+// @next: Reimplement Iter from scratch without looking
+// Remember: Lifetimes, Iter struct, List.iter() conversion, and Iterator trait implementation
+
 mod test {
     use super::{List, Node};
     use std::rc::Rc;
+
+    #[test]
+    fn basics() {
+        let list = List::new();
+        assert_eq!(list.head(), None);
+
+        let list = list.prepend(1).prepend(2).prepend(3);
+        assert_eq!(list.head(), Some(&3));
+
+        let list = list.tail();
+        assert_eq!(list.head(), Some(&2));
+
+        let list = list.tail();
+        assert_eq!(list.head(), Some(&1));
+
+        let list = list.tail();
+        assert_eq!(list.head(), None);
+
+        // Make sure empty tail works
+        let list = list.tail();
+        assert_eq!(list.head(), None);
+
+    }
 
     #[test]
     fn test_prepend() {
